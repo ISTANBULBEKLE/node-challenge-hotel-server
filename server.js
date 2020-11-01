@@ -101,16 +101,18 @@ app.delete('/bookings/:id', (req, res) => {
 });
 
 //Search a booking with a date marge;
-
-app.get('/bookings/search/:date', (req, res)=>{
-
+app.get('/bookings/search', (req, res)=>{
+  console.log(req.query);
   let date = req.query.date; 
-  let bookingsMatching = bookings.filter(m => m.checkInDate.toString() || m.checkOutDate.toString() === date.toString());
-  if(bookingsMatching !== undefined){
+  const checkInD = moment(`${bookings.checkInDate}`)
+  const checkOutD = moment(`${bookings.checkOutDate}`)
+  let bookingsMatching = bookings.filter(m => ((m.checkInD.toString() || m.checkOutD.toString()).includes(date.toString())));
+
+  if(bookingsMatching){
     res.status(200).send(bookingsMatching, 'Bookings found');
   }else{
-     res.status(404).send('Booking not found');
-  }
+     res.status(404).send('Booking-not found');
+  };
 });
 
 //Listen to the port;
