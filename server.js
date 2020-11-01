@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const app = express();
 
@@ -102,12 +103,14 @@ app.delete('/bookings/:id', (req, res) => {
 //Search a booking with a date marge;
 
 app.get('/bookings/search/:date', (req, res)=>{
+
   let date = req.query.date; 
-  
-  let bookingsMatching =  bookings.filter(m => m.text.toLowerCase().includes(date));
-
-  res.send(bookingsMatching);
-
+  let bookingsMatching = bookings.filter(m => m.checkInDate.toString() || m.checkOutDate.toString() === date.toString());
+  if(bookingsMatching !== undefined){
+    res.status(200).send(bookingsMatching, 'Bookings found');
+  }else{
+     res.status(404).send('Booking not found');
+  }
 });
 
 //Listen to the port;
