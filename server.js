@@ -50,8 +50,8 @@ app.post('/bookings', (req, res)=>{
   if (validateNewBooking(newBooking)) {
     newBooking.id = createId();
     // newBooking.timeSent = new Date().toISOString();
-    newBooking.checkInDate = new Date().toDateString();
-    newBooking.checkOutDate = new Date().toDateString();
+    newBooking.checkInDate = new Date().toLocaleDateString();
+    newBooking.checkOutDate = new Date().toLocaleDateString();
     newBooking.title =req.body.title,
     newBooking.firstName = req.body.firstName,
     newBooking.surname = req.body.surname,
