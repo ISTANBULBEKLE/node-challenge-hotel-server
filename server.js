@@ -12,6 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 //Use this array as your (in-memory) data store.
 const bookings = require("./bookings.json");
 
+
+// TODO add your routes and helper functions here
 app.get("/", function (request, response) {
   response.send("Hotel booking server.  Ask for /bookings, etc.");
 });
@@ -22,7 +24,6 @@ app.get('/bookings', (req,res)=>{
 });
 
 // Reading one booking with a specified ID;
-
 app.get('/bookings/:id', (req, res)=>{
     const Id = req.params.id;
     const Booking = bookings.find(m => m.id == Id);
@@ -34,14 +35,26 @@ app.get('/bookings/:id', (req, res)=>{
 })
 
 // Creating a new booking;
-
 app.post('/bookings', (req, res)=>{
   const newBooking = req.body;
   bookings.push(newBooking);
 })
-// TODO add your routes and helper functions here
+
+// Deleting a booking with a specified ID;
+app.delete('/bookings/:id', (req, res) => {
+    const Id  = req.params.id;
+    const elementIndex = messages.findIndex(m => m.id == Id);
+  
+    if(elementIndex === -1) {
+      res.status(404).send('Not found');
+    } else { 
+      messages.splice(elementIndex, 1);
+      res.status(200).send('Bookings deleted');
+    }
+});
 
 
+//Listen to the port;
 app.listen(3000, function () {
   console.log('Server is running on 3000');
 });
