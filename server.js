@@ -18,7 +18,7 @@ app.get("/", function (request, response) {
 
 //Reading all the bookings;
 app.get('/bookings', (req,res)=>{
-  res.sendFile(__dirname + './bookings.json');
+  res.send(bookings);
 });
 
 // TODO add your routes and helper functions here
