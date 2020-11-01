@@ -29,12 +29,25 @@ app.get('/bookings/:id', (req, res)=>{
     if (Booking) { 
       res.json(Booking); 
     } else { 
-      res.send("Booking not found"); 
+      res.status(404).send("Booking not found"); 
     }
 })
 
+// Creating a new booking;
+
+app.post('/bookings', (req, res)=>{
+  const newBooking = req.body;
+  bookings.push(newBooking);
+})
 // TODO add your routes and helper functions here
 
-const listener = app.listen(process.env.PORT, function () {
+
+app.listen(3000, function () {
+  console.log('Server is running on 3000');
+});
+
+/* const listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
+
+ */
