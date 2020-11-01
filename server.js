@@ -99,6 +99,16 @@ app.delete('/bookings/:id', (req, res) => {
     }
 });
 
+//Search a booking with a date marge;
+
+app.get('/bookings/search/:date', (req, res)=>{
+  let date = req.query.date; 
+  
+  let bookingsMatching =  bookings.filter(m => m.text.toLowerCase().includes(date));
+
+  res.send(bookingsMatching);
+
+});
 
 //Listen to the port;
 app.listen(3000, function () {
