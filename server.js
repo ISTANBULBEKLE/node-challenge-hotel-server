@@ -21,6 +21,18 @@ app.get('/bookings', (req,res)=>{
   res.send(bookings);
 });
 
+// Reading one booking with a specified ID;
+
+app.get('/bookings/:id', (req, res)=>{
+    const Id = req.params.id;
+    const Booking = bookings.find(m => m.id == Id);
+    if (Booking) { 
+      res.json(Booking); 
+    } else { 
+      res.send("Booking not found"); 
+    }
+})
+
 // TODO add your routes and helper functions here
 
 const listener = app.listen(process.env.PORT, function () {
