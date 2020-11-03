@@ -13,6 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 //Use this array as your (in-memory) data store.
 const bookings = require("./bookings.json");
 
+// Test
+app.get('/date', (req,res)=>{
+  const day = moment(new Date("2020-11-4"));
+  res.send(day);
+})
 
 // TODO add your routes and helper functions here
 app.get("/", function (request, response) {
@@ -51,13 +56,13 @@ app.post('/bookings', (req, res)=>{
   if (validateNewBooking(newBooking)) {
     newBooking.id = createId();
     // newBooking.timeSent = new Date().toISOString();
-    newBooking.checkInDate = new Date().toLocaleDateString();
-    newBooking.checkOutDate = new Date().toLocaleDateString();
-    newBooking.title =req.body.title,
-    newBooking.firstName = req.body.firstName,
-    newBooking.surname = req.body.surname,
-    newBooking.email = req.body.email,
-    newBooking.roomId = req.body.roomId,
+    newBooking.title =req.body.title;
+    newBooking.firstName = req.body.firstName;
+    newBooking.surname = req.body.surname;
+    newBooking.email = req.body.email;
+    newBooking.roomId = req.body.roomId;
+    newBooking.checkInDate = moment(new Date().toLocaleDateString());
+    newBooking.checkOutDate = moment(new Date().toLocaleDateString());
 
     bookings.push(newBooking);
     res.status(200).send('The booking is created successfully.');
@@ -68,11 +73,11 @@ app.post('/bookings', (req, res)=>{
 
 function validateNewBooking(newBooking) {
   if (
-    newBooking !== '' && 
     newBooking.title !== '' &&
     newBooking.firstName !== '' &&
     newBooking.surname !== '' &&
     newBooking.email !== '' &&
+    newBooking.roomId !== '' &&
     newBooking.checkInDate !== '' &&
     newBooking.checkOutDate !== ''
   ) {
